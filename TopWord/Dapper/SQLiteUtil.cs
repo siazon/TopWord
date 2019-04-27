@@ -54,5 +54,12 @@ namespace TopWord.Dapper
                  return connection.Execute(sql, obj);
             }
         }
+        public int Update<T>(string sql, T obj)
+        {
+            using (IDbConnection connection = SQLiteConnection())
+            {
+                return connection.Execute(sql, obj);
+            }
+        }
     }
 }

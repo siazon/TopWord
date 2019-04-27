@@ -42,22 +42,31 @@ namespace TopWord
             List<tb_word> list = new List<tb_word>();
             Task.Run(() =>
             {
-                list = SQLiteUtil.Ins.Query<tb_word>("select * from tb_word");
-                List<tb_word> _currWord = list.GetRange(0, Group);
-                for (int j = 0; j < time; j++)
+                list = SQLiteUtil.Ins.Query<tb_word>("select * from tb_word where type=0");
+                while (list.Count > 0)
                 {
-                    for (int i = 0; i < _currWord.Count; i++)
+                    List<tb_word> _currWord = list.GetRange(0, Group);
+                    list.RemoveRange(0, Group);
+                    SQLiteUtil.Ins.Update("update tb_word set type=1 where keyid=@keyid", _currWord);
+                    for (int j = 0; j < time; j++)
                     {
-                        this.Dispatcher.Invoke(() =>
+                        for (int i = 0; i < _currWord.Count; i++)
                         {
-                            txtword.Text = list[i].word;
-                            txtphonetic.Text = " [" + list[i].phonetic + "] ";
-                            txtmeaning.Text = list[i].meaning;
-                        });
-                        Thread.Sleep(3000);
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                txtword.Text = _currWord[i].word;
+                                txtphonetic.Text = " [" + _currWord[i].phonetic + "] ";
+                                txtmeaning.Text = "";
+                            });
+                            Thread.Sleep(2000);
+                            this.Dispatcher.Invoke(() =>
+                            {
+                                txtmeaning.Text = _currWord[i].meaning;
+                            });
+                            Thread.Sleep(1000);
+                        }
                     }
                 }
-              
             });
         }
 
@@ -118,7 +127,7 @@ namespace TopWord
             IntPtr CustomBar = (IntPtr)FindWindow(null, "TopWord");    //CustomBar是我的程序中需要置顶的窗体的名字
             if (CustomBar != null)
             {
-                SetWindowPos(CustomBar, -1, 0, 0, 0, 0,0);
+                SetWindowPos(CustomBar, -1, 0, 0, 0, 0, 0);
             }
             return;
             System.Diagnostics.Process[] pro = System.Diagnostics.Process.GetProcessesByName("TopWord");
