@@ -38,6 +38,27 @@ namespace TopWord
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            string title = "";
+            Dictionary<string, int> dic = new Dictionary<string, int>();
+            List<tb_word> lista = SQLiteUtil.Ins.Query<tb_word>("select * from tb_word  ORDER BY seq");
+            foreach (var item in lista)
+            {
+                if (item.word[0].ToString().ToLower()=="a")
+                {
+                    title = "";
+                }
+                if (item.word.IndexOf('[')>=0)
+                title += " " + item.word.Substring(0,item.word.IndexOf('['));
+                else if (item.word.IndexOf('/') >= 0)
+                    title += " " + item.word.Substring(0, item.word.IndexOf('/'));
+                else if (item.word.IndexOf('-') >= 0)
+                    title += " " + item.word.Substring(0, item.word.IndexOf('-'));
+                else
+                    title += " " + item.word;
+
+            }
+            string tttt = title;
+            return;
             this.Topmost = true;
             List<tb_word> list = new List<tb_word>();
             Task.Run(() =>
@@ -72,7 +93,8 @@ namespace TopWord
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            SYLog();
+            
+            //SYLog();
             //List<tb_word> list= SQLiteUtil.Ins.Query<tb_word>("SELECT * from tb_word");
         }
         public void SYLog()

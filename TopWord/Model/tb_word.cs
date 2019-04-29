@@ -14,5 +14,7 @@ namespace TopWord.Model
         public string meaning { get; set; }
         public string sentence { get; set; }
         public int type { get; set; }
+        public string header { get; set; }
+        public int seq { get; set; }
     }
 }
