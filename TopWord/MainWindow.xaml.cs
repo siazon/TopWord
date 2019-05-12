@@ -206,24 +206,21 @@ namespace TopWord
         private static extern int SetWindowPos(IntPtr hWnd, int hwndInsertAfter, int x, int y, int cx, int cy, int wFlags);//把应用置顶
         public void Top()
         {
-
+            SetBottom();
+            return;
             IntPtr CustomBar = (IntPtr)FindWindow(null, "TopWord");    //CustomBar是我的程序中需要置顶的窗体的名字
             if (CustomBar != null)
             {
                 SetWindowPos(CustomBar, -1, 0, 0, 0, 0, 0);
             }
-            return;
-            System.Diagnostics.Process[] pro = System.Diagnostics.Process.GetProcessesByName("TopWord");
-
-            if (pro.Length > 0)
+          
+        }
+        private void SetBottom( )
+        {
+            IntPtr CustomBar = (IntPtr)FindWindow(null, "TopWord");    //CustomBar是我的程序中需要置顶的窗体的名字
+            if (CustomBar != null)
             {
-                if (string.IsNullOrWhiteSpace(pro[0].MainWindowTitle))
-                    return;
-                IntPtr ptr = (IntPtr)FindWindow(null, pro[0].MainWindowTitle);
-                if (ptr != IntPtr.Zero)
-                {
-                    SetWindowPos(ptr, -1, 0, 0, (int)this.Width, (int)this.Height, 0);//应用置顶
-                }
+                SetWindowPos(CustomBar, 1, 0, 0, 0, 0, 0x01|0x02|0x10);
             }
         }
 

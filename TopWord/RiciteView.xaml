@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:TopWord"
-        mc:Ignorable="d" Icon=""
+        mc:Ignorable="d" Icon="Properties/logo.ico"
                       ShowIconOnTitleBar="True"
-                      ShowTitleBar="True"
+                      ShowTitleBar="True" WindowStartupLocation="CenterScreen"
         Title="RiciteView" Height="450" Width="600">
     <Grid>
         <Grid.ColumnDefinitions>
